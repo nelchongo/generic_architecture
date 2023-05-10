@@ -19,6 +19,7 @@ variable "tags" {
 variable "app_port" {
   type        = number
   description = "TCP port number where the application is listening at."
+  default = 8080
   validation {
     condition     = var.app_port >= 0 && var.app_port <= 65535
     error_message = "The application port must be a number in the range of 0-65535."
