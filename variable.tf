@@ -94,6 +94,7 @@ variable "network" {
 
 variable "tg_api_token" {
   type = string
+  default = ""
   description = "Twingate application token"
   validation {
     condition = var.tg_api_token != null
