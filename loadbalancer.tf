@@ -56,30 +56,22 @@ resource "aws_security_group_rule" "allow_cidrs_https_lb" {
     security_group_id = aws_security_group.lb.id
 }
 resource "aws_security_group_rule" "allow_sg_http_lb" {
-    for_each                 = toset([module.app_tg_sg.this_security_group_id])
     description              = "Allow incoming http traffic from clients"
     type                     = "ingress"
     from_port                = 80
     to_port                  = 80
     protocol                 = "tcp"
-    source_security_group_id = each.key
+    source_security_group_id = module.app_tg_sg.this_security_group_id
     security_group_id        = aws_security_group.lb.id
-
-    #Dependencies
-    depends_on = [module.app_tg_sg]
 }
 resource "aws_security_group_rule" "allow_sg_https_lb" {
-    for_each                 = toset([module.app_tg_sg.this_security_group_id])
     description              = "Allow incoming https traffic from clients"
     type                     = "ingress"
     from_port                = 443
     to_port                  = 443
     protocol                 = "tcp"
-    source_security_group_id = each.key
+    source_security_group_id = module.app_tg_sg.this_security_group_id
     security_group_id        = aws_security_group.lb.id
-
-    #Dependencies
-    depends_on = [module.app_tg_sg]
 }
 
 resource "aws_lb" "lb" {

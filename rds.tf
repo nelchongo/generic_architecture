@@ -61,17 +61,13 @@ resource "aws_security_group_rule" "allow_dbaccess_from_instances_to_rds" {
 }
 
 resource "aws_security_group_rule" "allow_dbaccess_from_given_sg" {
-  for_each                 = toset([module.app_tg_sg.this_security_group_id])
   description              = "Allow database access from each security group"
   type                     = "ingress"
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
-  source_security_group_id = each.key
+  source_security_group_id = module.app_tg_sg.this_security_group_id
   security_group_id        = aws_security_group.rds[0].id
-
-  #Dependencies
-  depends_on = [module.app_tg_sg]
 }
 
 #Roles
