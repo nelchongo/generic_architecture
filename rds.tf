@@ -5,32 +5,32 @@ locals {
 
 #Secret Manager
 resource "random_password" "rds_password" {
-  count   = 1
+  count = var.is_rds_available ? 1 : 0
   length  = 16
   special = false
 }
 
 resource "aws_secretsmanager_secret" "rds_pass" {
-  count = 1
+  count = var.is_rds_available ? 1 : 0
   name  = local.rds_secret_name
 }
 
 resource "aws_secretsmanager_secret_version" "rds_secret_version" {
-  count         = 1
+  count = var.is_rds_available ? 1 : 0
   secret_id     = aws_secretsmanager_secret.rds_pass[0].id
   secret_string = random_password.rds_password[0].result
 }
 
 #Networking
 resource "aws_db_subnet_group" "main" {
-  count      = 1
+  count = var.is_rds_available ? 1 : 0
   name       = "${local.rds_name}-${var.tags.env}-rds-subnet-group"
   subnet_ids = module.app_vpc.private_subnets
   tags       = var.tags
 }
 
 resource "aws_security_group" "rds" {
-  count       = 1
+  count = var.is_rds_available ? 1 : 0
   name        = "${local.rds_name}-${var.tags.env}-rds-sg"
   description = "Application database - ${var.app_name}"
   vpc_id      = module.app_vpc.vpc_id
@@ -38,7 +38,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group_rule" "allow_egress_rds" {
-  count             = 1
+  count = var.is_rds_available ? 1 : 0
   description       = "Allow all outgoing traffic"
   type              = "egress"
   protocol          = "all"
@@ -50,7 +50,7 @@ resource "aws_security_group_rule" "allow_egress_rds" {
 }
 
 resource "aws_security_group_rule" "allow_dbaccess_from_instances_to_rds" {
-  count                    = 1
+  count = var.is_rds_available ? 1 : 0
   description              = "Allow database access from application instances"
   type                     = "ingress"
   from_port                = 5432
@@ -61,6 +61,7 @@ resource "aws_security_group_rule" "allow_dbaccess_from_instances_to_rds" {
 }
 
 resource "aws_security_group_rule" "allow_dbaccess_from_given_sg" {
+  count = var.is_rds_available ? 1 : 0
   description              = "Allow database access from each security group"
   type                     = "ingress"
   from_port                = 5432
@@ -72,7 +73,7 @@ resource "aws_security_group_rule" "allow_dbaccess_from_given_sg" {
 
 #Roles
 resource "aws_iam_role" "rds_enhanced_monitoring" {
-  count               = 1
+  count = var.is_rds_available ? 1 : 0
   name                = "${local.rds_name}-rds-monitoring"
   managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"]
 
@@ -102,7 +103,7 @@ data "aws_availability_zones" "current" {
 }
 
 resource "aws_db_instance" "this" {
-  count = 1
+  count = var.is_rds_available ? 1 : 0
   identifier        = local.rds_name
   engine            = "postgres"
   engine_version    = "13.7"

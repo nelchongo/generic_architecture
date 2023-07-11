@@ -47,6 +47,12 @@ variable "lb_certificate_arn" {
 }
 
 #RDS Variables
+variable "is_rds_available"{
+  type        = bool
+  description = "Default true, if false RDS will not be created"
+  default     = true
+}
+
 variable "rds_instance_size" {
   type        = string
   description = "RDS instance size"
