@@ -46,7 +46,7 @@ data "aws_ami" "latest" {
 #VPC Definition
 module "app_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.19.0"
+  version = "5.0.0"
 
   name = "${var.app_name}-vpc"
   cidr = "10.0.0.0/16"
