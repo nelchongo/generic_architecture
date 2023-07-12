@@ -22,3 +22,8 @@ output "vpc_public_subnet" {
   value       = module.app_vpc.public_subnets
   description = "VPC public subnet"
 }
+
+output "internal_lb_arn"{
+  value       = aws_lb.lb.arn
+  description = "internal lb ARN"
+}

@@ -41,3 +41,4 @@ This MD file is used to explain some requirements, pre-requisites and variables
 |ecs_execution_role_id                |ECS execution role id                                            |
 |vpc_id                               |ID of the VPC                                                    |
 |vpc_public_subnet                    |Public subnets of the VPC                                        |
+|internal_lb_arn                      |Internal lb ARN                                                  |
