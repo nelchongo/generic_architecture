@@ -12,3 +12,13 @@ output "ecs_execution_role_id" {
   value       = aws_iam_role.execution.id
   description = "ECS Execution role id"
 }
+
+output "vpc_id" {
+  value       = module.app_vpc.vpc_id
+  description = "VPC id"
+}
+
+output "vpc_public_subnet" {
+  value       = module.app_vpc.public_subnets
+  description = "VPC public subnet"
+}

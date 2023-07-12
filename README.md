@@ -20,7 +20,7 @@ This MD file is used to explain some requirements, pre-requisites and variables
 |tags                                 |This are tha applied tags for all the resources                  |`True`   | `NULL`       |  
 |app_port                             |This port for accesing the application                           |`False`  | `8080`       |
 |container_count                      |Number of containers inside the service                          |`False`  | `1`          |
-|lb_is_public                         |Check if load balancer is public or not                          |`False`  | `True`       |
+|lb_is_public                         |Check if load balancer is public or not                          |`False`  | `False`       |
 |lb_health_check_path                 |load balancer health check path                                  |`False`  | `/ping/`     |
 |lb_certificate_arn                   |Load balancer ssl certificates check guides on how to create     |`True`   | `NULL`       |
 |is_rds_available                     |RDS creation or not                                              |`False`  | `True`       |
@@ -39,3 +39,5 @@ This MD file is used to explain some requirements, pre-requisites and variables
 |app_name                             |This variable is for application name                            |
 |app_dns                              |This variable is for application dns                             |
 |ecs_execution_role_id                |ECS execution role id                                            |
+|vpc_id                               |ID of the VPC                                                    |
+|vpc_public_subnet                    |Public subnets of the VPC                                        |
