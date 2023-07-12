@@ -33,17 +33,22 @@ variable "containers_count" {
 }
 
 #Load Balancer Variables
+variable "lb_is_public" {
+  type = bool
+  default = false
+}
+
 variable "lb_health_check_path" {
-    type = string
-    default = "/ping/"
+  type = string
+  default = "/ping/"
 }
 
 variable "lb_certificate_arn" {
-    type = string
-    validation {
-        condition     = (var.lb_certificate_arn != null || var.lb_certificate_arn != "")
-        error_message = "The lb certificates can't be null or empty"
-    }
+  type = string
+  validation {
+    condition     = (var.lb_certificate_arn != null || var.lb_certificate_arn != "")
+    error_message = "The lb certificates can't be null or empty"
+  }
 }
 
 #RDS Variables
@@ -84,12 +89,12 @@ variable "rds_enable_performance_insights" {
 }
 
 variable "route_53_hosted_zone_id" {
-    type       = string
-    description = "Hosted zone id"
-    validation {
-        condition     = (var.route_53_hosted_zone_id != null || var.route_53_hosted_zone_id != "")
-        error_message = "The hosted zone id can't be null or empty"
-    }
+  type       = string
+  description = "Hosted zone id"
+  validation {
+    condition     = (var.route_53_hosted_zone_id != null || var.route_53_hosted_zone_id != "")
+    error_message = "The hosted zone id can't be null or empty"
+  }
 }
 
 #Twingate Variables

@@ -76,7 +76,7 @@ resource "aws_security_group_rule" "allow_sg_https_lb" {
 
 resource "aws_lb" "lb" {
     name               = var.app_name
-    internal           = true
+    internal           = var.lb_is_public
     load_balancer_type = "application"
     security_groups    = [aws_security_group.lb.id]
     subnets            = module.app_vpc.private_subnets

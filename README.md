@@ -20,9 +20,10 @@ This MD file is used to explain some requirements, pre-requisites and variables
 |tags                                 |This are tha applied tags for all the resources                  |`True`   | `NULL`       |  
 |app_port                             |This port for accesing the application                           |`False`  | `8080`       |
 |container_count                      |Number of containers inside the service                          |`False`  | `1`          |
+|lb_is_public                         |Check if load balancer is public or not                          |`False`  | `True`       |
 |lb_health_check_path                 |load balancer health check path                                  |`False`  | `/ping/`     |
 |lb_certificate_arn                   |Load balancer ssl certificates check guides on how to create     |`True`   | `NULL`       |
-|is_rds_available                     |RDS creation or not                                              |`False`  | `true`       |
+|is_rds_available                     |RDS creation or not                                              |`False`  | `True`       |
 |rds_instance_size                    |RDS instance size                                                |`False`  | `db.t3.micro`|
 |rds_allocated_storage                |RDS instance allocated storage in GB                             |`False`  | `20`         |
 |rds_storage_type                     |RDS instance storage type                                        |`False`  | `gp2`        |
