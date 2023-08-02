@@ -27,12 +27,12 @@ resource "twingate_remote_network" "aws_network" {
 
 resource "twingate_connector" "aws_connector" {
   count = var.twingate_available == true? 1 : 0
-  remote_network_id = twingate_remote_network.aws_network.id
+  remote_network_id = twingate_remote_network.aws_network[0].id
 }
 
 resource "twingate_connector_tokens" "aws_connector_tokens" {
   count = var.twingate_available == true? 1 : 0
-  connector_id = twingate_connector.aws_connector.id
+  connector_id = twingate_connector.aws_connector[0].id
 }
 
 data "aws_ami" "latest" {
@@ -85,13 +85,13 @@ module "app_ec2_tenant_connector" {
     mkdir -p /etc/twingate/
     {
       echo TWINGATE_URL="https://${var.network}.twingate.com"
-      echo TWINGATE_ACCESS_TOKEN="${twingate_connector_tokens.aws_connector_tokens.access_token}"
-      echo TWINGATE_REFRESH_TOKEN="${twingate_connector_tokens.aws_connector_tokens.refresh_token}"
+      echo TWINGATE_ACCESS_TOKEN="${twingate_connector_tokens.aws_connector_tokens[0].access_token}"
+      echo TWINGATE_REFRESH_TOKEN="${twingate_connector_tokens.aws_connector_tokens[0].refresh_token}"
     } > /etc/twingate/connector.conf
     sudo systemctl enable --now twingate-connector
   EOT
   ami                    = data.aws_ami.latest.id
   instance_type          = "t3a.micro"
-  vpc_security_group_ids = [module.app_tg_sg.this_security_group_id]
+  vpc_security_group_ids = [module.app_tg_sg[0].this_security_group_id]
   subnet_id              = module.app_vpc.private_subnets[0]
 }
