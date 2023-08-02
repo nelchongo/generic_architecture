@@ -61,7 +61,7 @@ resource "aws_security_group_rule" "allow_dbaccess_from_instances_to_rds" {
 }
 
 resource "aws_security_group_rule" "allow_dbaccess_from_given_sg" {
-  count = var.is_rds_available ? 1 : 0
+  count = var.is_rds_available && try(module.app_tg_sg[0], false) != false ? 1 : 0
   description              = "Allow database access from each security group"
   type                     = "ingress"
   from_port                = 5432

@@ -56,6 +56,7 @@ resource "aws_security_group_rule" "allow_cidrs_https_lb" {
     security_group_id = aws_security_group.lb.id
 }
 resource "aws_security_group_rule" "allow_sg_http_lb" {
+    count = try(module.app_tg_sg[0], false) != false? 1 : 0
     description              = "Allow incoming http traffic from clients"
     type                     = "ingress"
     from_port                = 80
@@ -65,6 +66,7 @@ resource "aws_security_group_rule" "allow_sg_http_lb" {
     security_group_id        = aws_security_group.lb.id
 }
 resource "aws_security_group_rule" "allow_sg_https_lb" {
+    count = try(module.app_tg_sg[0], false) != false? 1 : 0
     description              = "Allow incoming https traffic from clients"
     type                     = "ingress"
     from_port                = 443
