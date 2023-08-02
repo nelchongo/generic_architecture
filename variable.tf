@@ -125,8 +125,4 @@ variable "nat_available" {
   type = bool
   default = true
   description = "Create or not NAT inside the VPC"
-  validation {
-    condition = var.twingate_available == true && var.nat_available == false
-    error_message = "If twingate is available this condition should be true"
-  }
 }
