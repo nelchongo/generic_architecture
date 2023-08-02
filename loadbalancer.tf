@@ -61,7 +61,7 @@ resource "aws_security_group_rule" "allow_sg_http_lb" {
     from_port                = 80
     to_port                  = 80
     protocol                 = "tcp"
-    source_security_group_id = module.app_tg_sg.this_security_group_id
+    source_security_group_id = module.app_tg_sg[0].this_security_group_id
     security_group_id        = aws_security_group.lb.id
 }
 resource "aws_security_group_rule" "allow_sg_https_lb" {
@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "allow_sg_https_lb" {
     from_port                = 443
     to_port                  = 443
     protocol                 = "tcp"
-    source_security_group_id = module.app_tg_sg.this_security_group_id
+    source_security_group_id = module.app_tg_sg[0].this_security_group_id
     security_group_id        = aws_security_group.lb.id
 }
 

@@ -67,7 +67,7 @@ resource "aws_security_group_rule" "allow_dbaccess_from_given_sg" {
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
-  source_security_group_id = module.app_tg_sg.this_security_group_id
+  source_security_group_id = module.app_tg_sg[0].this_security_group_id
   security_group_id        = aws_security_group.rds[0].id
 }
 
