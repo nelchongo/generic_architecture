@@ -98,6 +98,12 @@ variable "route_53_hosted_zone_id" {
 }
 
 #Twingate Variables
+variable "twingate_available" {
+  type = bool
+  default = true
+  description = "Create or not twingate EC2 instance and network."
+}
+
 variable "network" {
   type = string
   default = "futurumsoft"
@@ -111,5 +117,16 @@ variable "tg_api_token" {
   validation {
     condition = var.tg_api_token != null
     error_message = "Twingate token can not be null, please insert a token" 
+  }
+}
+
+#VPC
+variable "nat_available" {
+  type = bool
+  default = true
+  description = "Create or not NAT inside the VPC"
+  validation {
+    condition = var.twingate_available == true && var.nat_available == false
+    error_message = "If twingate is available this condition should be true"
   }
 }

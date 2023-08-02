@@ -20,15 +20,18 @@ resource "aws_secretsmanager_secret_version" "app_tg_token_string" {
 
 #Network connector
 resource "twingate_remote_network" "aws_network" {
+  count = var.twingate_available == true? 1 : 0
   name = local.tg_name
   location = "AWS"
 }
 
 resource "twingate_connector" "aws_connector" {
+  count = var.twingate_available == true? 1 : 0
   remote_network_id = twingate_remote_network.aws_network.id
 }
 
 resource "twingate_connector_tokens" "aws_connector_tokens" {
+  count = var.twingate_available == true? 1 : 0
   connector_id = twingate_connector.aws_connector.id
 }
 
@@ -56,10 +59,11 @@ module "app_vpc" {
   public_subnets                 = ["10.0.2.0/24"]
   # enable_classiclink_dns_support = true
   enable_dns_hostnames           = true
-  enable_nat_gateway             = true
+  enable_nat_gateway             = var.nat_available
 }
 
 module "app_tg_sg" {
+  count = var.twingate_available == true? 1 : 0
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.17.0"
   vpc_id  = module.app_vpc.vpc_id
@@ -70,6 +74,7 @@ module "app_tg_sg" {
 
 # spin off a ec2 instance from Twingate AMI and configure tokens in user_data
 module "app_ec2_tenant_connector" {
+  count = var.twingate_available == true? 1 : 0
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "2.19.0"
 
