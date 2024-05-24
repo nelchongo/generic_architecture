@@ -1,4 +1,4 @@
-# fs_infrastructure
+# Infrastructure
 This MD file is used to explain some requirements, pre-requisites and variables
 
 ## Pre-requisite
@@ -44,3 +44,8 @@ This MD file is used to explain some requirements, pre-requisites and variables
 |vpc_id                               |ID of the VPC                                                    |
 |vpc_public_subnet                    |Public subnets of the VPC                                        |
 |internal_lb_arn                      |Internal lb ARN                                                  |
+
+##  Deployed Infrastructure Example
+You can set it up in one VPC or in Multiple depending on the use case
+
+<img src="./.generic_architecture.png" width="500" alt="accessibility text">
